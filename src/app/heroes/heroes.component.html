@@ -1,0 +1,17 @@
+  <dl>
+    <dt>ID</dt>
+    <dd>{{ hero.id }}</dd>
+    <dt>Name</dt>
+    <dd>{{ hero.name }}</dd>
+    <dt>Power</dt>
+    <dd>{{ hero.power }}</dd>
+    <dt>Alter Ego</dt>
+    <dd [class.missing]="!hero.alterEgo">{{ hero.alterEgo || 'UNKNOWN' }}</dd>
+    <dt>Description</dt>
+    <dd>{{ hero.description || '-' }}</dd>
+    <dt>Rank</dt>
+    <dd>{{ hero.rank || '???' }}</dd>
+  </dl>
+
+  <form></form>
+
