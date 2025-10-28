@@ -1,0 +1,18 @@
+<dl>
+  <dt>ID</dt>
+  <dd>{{ id() }}</dd>
+  <dt>Name</dt>
+  <dd>{{ name() }}</dd>
+  <dt>Power</dt>
+  <dd>{{ power() }}</dd>
+  <dt>Alter Ego</dt>
+  <dd [class.missing]="!alterEgo()">
+    {{ alterEgo() || "UNKNOWN" | uppercase }}
+  </dd>
+  <dt>Description</dt>
+  <dd>{{ description() || "-" }}</dd>
+  <dt>Rank</dt>
+  <dd>{{ rank() }}</dd>
+
+  <span (click)="clickedEdit.emit()">Edit ✎</span>
+</dl>

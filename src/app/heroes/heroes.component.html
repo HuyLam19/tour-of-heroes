@@ -1,17 +1,26 @@
-  <dl>
-    <dt>ID</dt>
-    <dd>{{ hero.id }}</dd>
-    <dt>Name</dt>
-    <dd>{{ hero.name }}</dd>
-    <dt>Power</dt>
-    <dd>{{ hero.power }}</dd>
-    <dt>Alter Ego</dt>
-    <dd [class.missing]="!hero.alterEgo">{{ hero.alterEgo || 'UNKNOWN' }}</dd>
-    <dt>Description</dt>
-    <dd>{{ hero.description || '-' }}</dd>
-    <dt>Rank</dt>
-    <dd>{{ hero.rank || '???' }}</dd>
-  </dl>
+<section>
+  <button (click)="selectHero(undefined)">+ Create New Hero</button>
 
-  <form></form>
+  <app-hero-details
+    [hero]="selectedHero"
+    (heroChange)="submit($event)"
+    [rankOptions]="options"
+  ></app-hero-details>
+</section>
 
+<section>
+  <ng-container *ngIf="isLoading; else heroesTemplate">
+    <span class="loader"></span>
+  </ng-container>
+  <ng-template #heroesTemplate>
+    <app-hero-card
+      *ngFor="let hero of heroes"
+      [id]="hero.id"
+      [name]="hero.name"
+      [power]="hero.power"
+      [alterEgo]="hero.alterEgo || ''"
+      [rank]="hero.rank | rankName: options"
+      [description]="hero.description || ''"
+    />
+  </ng-template>
+</section>

@@ -1,0 +1,18 @@
+<h2>Top 5 Power Heroes</h2>
+
+<main>
+  <ng-container *ngIf="isLoading(); else heroesTemplate">
+    <span class="loader"></span>
+  </ng-container>
+  <ng-template #heroesTemplate>
+    <app-hero-card
+      *ngFor="let hero of heroes()"
+      [id]="hero.id"
+      [name]="hero.name"
+      [power]="hero.power"
+      [alterEgo]="hero.alterEgo || ''"
+      [rank]="hero.rank | rankName : rankOptions()"
+      [description]="hero.description || ''"
+    />
+  </ng-template>
+</main>
