@@ -1,16 +1,23 @@
 :host {
   width: 100%;
-  display: flex;
   gap: 24px;
 }
 
-:host > section:first-of-type > button {
-  min-width: 320px;
+header {
   margin-bottom: 16px;
 }
 
-:host > section:last-of-type {
-  flex: 1;
+header > section {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+header > section > input {
+  width: 360px;
+}
+
+ main {
   display: grid;
   gap: 16px 24px;
   grid-template-columns: repeat(3, minmax(300px, 1fr));
@@ -22,4 +29,24 @@
   margin: auto;
   grid-column: 1 / 4;
   border-width: 10px;
+}
+
+a.edit, a.delete {
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: -webkit-baseline-middle;
+  letter-spacing: 0.75px;
+  cursor: pointer;
+}
+
+a.edit {
+  color: #3f51b5;
+}
+
+a.delete {
+  color: red;
+}
+
+a.edit:hover, a.delete:hover {
+  text-decoration: underline;
 }

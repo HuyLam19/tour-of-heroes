@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { OptionItem } from "../../option-item.model";
+import { OptionItem } from "../models/option-item.model";
 
 @Pipe({
   name: 'rankName',

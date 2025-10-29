@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, contentChild, ElementRef, input, output, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-hero-card',
@@ -14,4 +14,6 @@ export class HeroCardComponent {
   public readonly alterEgo = input<string>('');
   public readonly rank = input<string>('');
   public readonly clickedEdit = output();
+
+  protected readonly content = contentChild(TemplateRef<ElementRef>);
 }

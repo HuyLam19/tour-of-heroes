@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { OptionItem } from '../option-item.model';
+import { OptionItem } from '../shared/models/option-item.model';
 import { timer } from 'rxjs';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class GlobalDataStore {
   }
 
   #getRanks(): void {
-    timer(1000 * Math.random()).subscribe({
+    timer(1000).subscribe({
       next: () => {
         this.rankOptions.set([
           {

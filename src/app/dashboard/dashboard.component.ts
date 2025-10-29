@@ -1,11 +1,10 @@
 import { Component, OnInit, signal, Signal } from '@angular/core';
 import { GlobalDataStore } from '../stores/global-data.store';
-import { OptionItem } from '../option-item.model';
-import { Hero } from '../hero.model';
-import { HeroService } from '../hero.service';
+import { OptionItem } from '../shared/models/option-item.model';
+import { Hero } from '../shared/models/hero.model';
+import { HeroService } from '../services/hero.service';
 
 @Component({
-  selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

@@ -1,14 +1,18 @@
-<section>
-  <button (click)="selectHero(undefined)">+ Create New Hero</button>
+<header>
+  <h2>All Heroes</h2>
 
-  <app-hero-details
-    [hero]="selectedHero"
-    (heroChange)="submit($event)"
-    [rankOptions]="options"
-  ></app-hero-details>
-</section>
+  <section>
+    <input
+      type="text"
+      placeholder="Search hero by name"
+      ngModel
+      (ngModelChange)="onSearchInput($event)"
+    />
+    <button (click)="goToDetails()">+ Create New Hero</button>
+  </section>
+</header>
 
-<section>
+<main>
   <ng-container *ngIf="isLoading; else heroesTemplate">
     <span class="loader"></span>
   </ng-container>
@@ -19,8 +23,13 @@
       [name]="hero.name"
       [power]="hero.power"
       [alterEgo]="hero.alterEgo || ''"
-      [rank]="hero.rank | rankName: options"
+      [rank]="hero.rank | rankName : rankOptions()"
       [description]="hero.description || ''"
-    />
+    >
+      <ng-template>
+        <a class="edit" (click)="goToDetails(hero)">Edit✎</a>
+        <a class="delete" (click)="deleteHero(hero)">Delete 🗑</a>
+      </ng-template>
+    </app-hero-card>
   </ng-template>
-</section>
+</main>

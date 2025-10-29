@@ -1,6 +1,6 @@
-import { Hero } from "./hero.model";
+import { Hero } from "../models/hero.model";
 
-export const HEROES: Hero[] = [
+export const MOCK_HEROES: Hero[] = [
   {
     id: 1,
     name: 'Superman',
