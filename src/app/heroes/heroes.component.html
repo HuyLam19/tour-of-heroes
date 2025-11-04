@@ -10,6 +10,59 @@
     />
     <button (click)="goToDetails()">+ Create New Hero</button>
   </section>
+
+  @if (isShowTest()) {
+    <app-component-test
+      [text]="testText"
+      [placeholder]="undefined"
+      isChecked="true"
+      #componentTest
+    >
+      <p *ngIf="isShowContent">content</p>
+
+      <ng-template appComponentTest>
+        <h3>This is content with appComponentTest directive</h3>
+      </ng-template>
+
+      <div>
+        <h2>Count is: {{ count }}</h2>
+      </div>
+    </app-component-test>
+  }
+
+  <input
+    type="text"
+    placeholder="Change input text"
+    ngModel
+    (ngModelChange)="changeTestText($event)"
+  />
+  <button (click)="toggleTestComponent()">Toggle Component Test</button>
+  <button [attr.disabled]="false" (click)="isShowContent = !isShowContent">
+    Toggle Content Inside Component Test
+  </button>
+
+  <hr />
+
+  <button [disabled]="tabIndex() === 0" (click)="changeTab(0)">Tab 1</button>
+  <button [disabled]="tabIndex() === 1" (click)="changeTab(1)">Tab 2</button>
+  <!-- @if (currentTabComponent()) {
+    <ng-container *ngComponentOutlet="currentTabComponent()!.component; inputs: currentTabComponent()!.inputs"></ng-container>
+  } -->
+  @if (tabIndex() === 0) {
+  <app-component-test
+    [text]="testText"
+    [placeholder]="undefined"
+    isChecked="true"
+  >
+    <p *ngIf="isShowContent">content</p>
+
+    <ng-template appComponentTest>
+      <h3>This is content with appComponentTest directive</h3>
+    </ng-template>
+  </app-component-test>
+  } @if (tabIndex() === 1) {
+  <app-hero-card [id]="123" [name]="'dynamic for test'" />
+  }
 </header>
 
 <main>

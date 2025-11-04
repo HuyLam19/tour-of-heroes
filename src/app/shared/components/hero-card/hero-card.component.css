@@ -55,3 +55,7 @@ dl > dd:nth-of-type(4) {
 dl > dd.missing:nth-of-type(4) {
   color: #999;
 }
+
+button {
+  background-color: green;
+}

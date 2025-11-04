@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NgZone, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -12,6 +12,9 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { InMemoryDataService } from './services/in-memory-data.service';
 import { HeroCardComponent } from './shared/components/hero-card/hero-card.component';
 import { RankNamePipe } from './shared/pipes/rank-name.pipe';
+import { ComponentTest } from "./shared/components/component-test/component-test";
+import { ComponentTestDirective } from "./shared/components/component-test/component-test.directive";
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -24,14 +27,19 @@ import { RankNamePipe } from './shared/pipes/rank-name.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     FormsModule,
     RankNamePipe,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false,
+        dataEncapsulation: false,
     }),
+    ComponentTest,
+    ComponentTestDirective
+],
+  providers: [
+
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

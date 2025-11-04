@@ -1,10 +1,20 @@
-import { ChangeDetectionStrategy, Component, contentChild, ElementRef, input, output, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  contentChild,
+  ElementRef,
+  input,
+  output,
+  TemplateRef,
+  ViewEncapsulation
+} from '@angular/core';
 
 @Component({
   selector: 'app-hero-card',
   templateUrl: './hero-card.component.html',
   styleUrl: './hero-card.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.ShadowDom,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroCardComponent {
   public readonly id = input.required<number>();

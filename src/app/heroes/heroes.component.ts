@@ -1,4 +1,20 @@
-import { Component, DestroyRef, OnInit, Signal, signal } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  DoCheck,
+  effect,
+  OnInit,
+  Signal,
+  signal,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { Hero } from '../shared/models/hero.model';
 import {
   BehaviorSubject,
@@ -20,18 +36,54 @@ import { OptionItem } from '../shared/models/option-item.model';
 import { HeroService } from '../services/hero.service';
 import { GlobalDataStore } from '../stores/global-data.store';
 import { Router } from '@angular/router';
+import { ComponentTest } from '../shared/components/component-test/component-test';
+import { HeroCardComponent } from '../shared/components/hero-card/hero-card.component';
 
 @Component({
   templateUrl: './heroes.component.html',
   styleUrl: './heroes.component.css',
 })
-export class HeroesComponent implements OnInit {
+export class HeroesComponent
+  implements
+    OnInit,
+    AfterViewInit,
+    AfterViewChecked,
+    AfterContentInit,
+    AfterContentChecked,
+    DoCheck
+{
   readonly #loadData$ = new BehaviorSubject<void>(undefined);
   readonly #searchTerm$ = new BehaviorSubject<string>('');
+  readonly #tabMap = new Map<number, unknown>([
+    [0, ComponentTest],
+    [1, HeroCardComponent]
+  ])
 
   protected heroes: Hero[] = [];
   protected isLoading: boolean = false;
   protected readonly rankOptions: Signal<OptionItem[]>;
+  protected readonly isShowTest = signal(false);
+  protected isShowContent = false;
+  protected testText = '';
+  protected readonly tabIndex = signal(0);
+  protected readonly currentTabComponent = computed(() => {
+    switch (this.tabIndex()) {
+      case 0:
+        return {
+          component: ComponentTest,
+          inputs: { text: 'Dynamic Component Test', isChecked: true }
+        }
+      case 1:
+        return {
+          component: HeroCardComponent,
+          inputs: { id: 123123, name: 'Dynamic Hero' }
+        }
+      default:
+        return undefined
+    }
+  })
+  protected count = 0;
+  protected readonly componentTest = viewChild<ComponentTest>('componentTest');
 
   public constructor(
     private service: HeroService,
@@ -40,10 +92,38 @@ export class HeroesComponent implements OnInit {
     private destroyRef: DestroyRef
   ) {
     this.rankOptions = globalDataStore.rankOptions;
+    setInterval(() => {
+      this.count++
+    }, 10000)
+  }
+
+  public ngAfterContentInit(): void {
+    console.log('Parent content inited');
+  }
+
+  public ngAfterContentChecked(): void {
+    console.log('Parent content checked');
+  }
+
+  public ngAfterViewInit(): void {
+    console.log('Parent view inited');
+  }
+
+  public ngAfterViewChecked(): void {
+    console.log('Parent view checked');
   }
 
   public ngOnInit(): void {
+    console.log('Parent inits!');
     this.#setupGetHeroes();
+  }
+
+  public ngDoCheck(): void {
+    console.log('Parent do check!');
+  }
+
+  protected toggleTestComponent(): void {
+    this.isShowTest.update(value => !value)
   }
 
   protected submit(hero: Hero): void {
@@ -57,6 +137,13 @@ export class HeroesComponent implements OnInit {
         console.error('Failed to save Hero');
       },
     });
+  }
+
+  protected changeTab(tabIndex: number): void {
+    if (this.tabIndex() === tabIndex) {
+      return;
+    };
+    this.tabIndex.set(tabIndex)
   }
 
   protected goToDetails(hero?: Hero): void {
@@ -78,6 +165,10 @@ export class HeroesComponent implements OnInit {
 
   protected onSearchInput(input: string): void {
     this.#searchTerm$.next(input);
+  }
+
+  protected changeTestText(input: string): void {
+    this.testText = input;
   }
 
   #setupGetHeroes(): void {

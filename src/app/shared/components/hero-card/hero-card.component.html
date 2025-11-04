@@ -4,7 +4,7 @@
   <dt>Name</dt>
   <dd>{{ name() }}</dd>
   <dt>Power</dt>
-  <dd>{{ power() }}</dd>
+  <dd>{{ power() | number: '3.0-0'}}</dd>
   <dt>Alter Ego</dt>
   <dd [class.missing]="!alterEgo()">
     {{ alterEgo() || "UNKNOWN" | uppercase }}
