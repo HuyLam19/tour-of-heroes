@@ -5,36 +5,34 @@
     <input
       type="text"
       placeholder="Search hero by name"
-      ngModel
-      (ngModelChange)="onSearchInput($event)"
+      (input)="onSearchInput($event)"
     />
     <button (click)="goToDetails()">+ Create New Hero</button>
   </section>
 
   @if (isShowTest()) {
-    <app-component-test
-      [text]="testText"
-      [placeholder]="undefined"
-      isChecked="true"
-      #componentTest
-    >
-      <p *ngIf="isShowContent">content</p>
+  <app-component-test
+    [text]="testText"
+    [placeholder]="undefined"
+    isChecked="true"
+    #componentTest
+  >
+    <p *ngIf="isShowContent">content</p>
 
-      <ng-template appComponentTest>
-        <h3>This is content with appComponentTest directive</h3>
-      </ng-template>
+    <ng-template appComponentTest>
+      <h3>This is content with appComponentTest directive</h3>
+    </ng-template>
 
-      <div>
-        <h2>Count is: {{ count }}</h2>
-      </div>
-    </app-component-test>
+    <div>
+      <h2>Count is: {{ count }}</h2>
+    </div>
+  </app-component-test>
   }
 
   <input
     type="text"
     placeholder="Change input text"
-    ngModel
-    (ngModelChange)="changeTestText($event)"
+    (input)="changeTestText($event)"
   />
   <button (click)="toggleTestComponent()">Toggle Component Test</button>
   <button [attr.disabled]="false" (click)="isShowContent = !isShowContent">
@@ -61,7 +59,7 @@
     </ng-template>
   </app-component-test>
   } @if (tabIndex() === 1) {
-  <app-hero-card [id]="123" [name]="'dynamic for test'" />
+    <app-hero-card [id]="123" [name]="'dynamic for test'"/>
   }
 </header>
 
@@ -70,19 +68,36 @@
     <span class="loader"></span>
   </ng-container>
   <ng-template #heroesTemplate>
-    <app-hero-card
-      *ngFor="let hero of heroes"
-      [id]="hero.id"
-      [name]="hero.name"
-      [power]="hero.power"
-      [alterEgo]="hero.alterEgo || ''"
-      [rank]="hero.rank | rankName : rankOptions()"
-      [description]="hero.description || ''"
-    >
-      <ng-template>
-        <a class="edit" (click)="goToDetails(hero)">Edit✎</a>
-        <a class="delete" (click)="deleteHero(hero)">Delete 🗑</a>
-      </ng-template>
-    </app-hero-card>
+    <ng-container *ngFor="let hero of heroes">
+      <!-- 
+      <ng-template [isSuperHero]="hero.power" let-remaining="remainingPower" let-remainingAbs="remainingPowerAbs" >
+        app-hero-card
+      </ng-template> -->
+      <app-hero-card
+        *isSuperHero="
+          hero.power;
+          let remaining = remainingPower;
+          let remainingAbs = remainingPowerAbs
+        "
+        appHighlight
+        [id]="hero.id"
+        [name]="hero.name"
+        [power]="hero.power"
+        [alterEgo]="hero.alterEgo || ''"
+        [rank]="hero.rank | rankName : rankOptions()"
+        [description]="hero.description || ''"
+      >
+        <ng-template>
+          <a class="edit" (click)="goToDetails(hero)">Edit✎</a>
+          <a class="delete" (click)="deleteHero(hero)">Delete 🗑</a>
+          <span
+            class="greater"
+            [class.up]="remaining > 0"
+            [class.down]="remaining < 0"
+            >{{ remainingAbs }}</span
+          >
+        </ng-template>
+      </app-hero-card>
+    </ng-container>
   </ng-template>
 </main>

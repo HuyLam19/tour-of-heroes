@@ -9,6 +9,7 @@ import {
   DestroyRef,
   DoCheck,
   effect,
+  Inject,
   OnInit,
   Signal,
   signal,
@@ -38,6 +39,8 @@ import { GlobalDataStore } from '../stores/global-data.store';
 import { Router } from '@angular/router';
 import { ComponentTest } from '../shared/components/component-test/component-test';
 import { HeroCardComponent } from '../shared/components/hero-card/hero-card.component';
+import { APP_LOGGER } from '../shared/constants/app-logger.constant';
+import { LoggerTest } from '../shared/models/logger-test';
 
 @Component({
   templateUrl: './heroes.component.html',
@@ -58,6 +61,8 @@ export class HeroesComponent
     [0, ComponentTest],
     [1, HeroCardComponent]
   ])
+
+  public isManner = true;
 
   protected heroes: Hero[] = [];
   protected isLoading: boolean = false;
@@ -83,18 +88,18 @@ export class HeroesComponent
     }
   })
   protected count = 0;
-  protected readonly componentTest = viewChild<ComponentTest>('componentTest');
 
   public constructor(
     private service: HeroService,
     private globalDataStore: GlobalDataStore,
     private router: Router,
+    @Inject(APP_LOGGER) appLogger: LoggerTest,
     private destroyRef: DestroyRef
   ) {
     this.rankOptions = globalDataStore.rankOptions;
-    setInterval(() => {
-      this.count++
-    }, 10000)
+    // setInterval(() => {
+    //   this.count++
+    // }, 10000)
   }
 
   public ngAfterContentInit(): void {
@@ -163,12 +168,14 @@ export class HeroesComponent
     });
   }
 
-  protected onSearchInput(input: string): void {
-    this.#searchTerm$.next(input);
+  protected onSearchInput(event: Event): void {
+    const text = (event.target as HTMLInputElement).value;
+    this.#searchTerm$.next(text);
   }
 
-  protected changeTestText(input: string): void {
-    this.testText = input;
+  protected changeTestText(event: Event): void {
+    const text = (event.target as HTMLInputElement).value;
+    this.testText = text;
   }
 
   #setupGetHeroes(): void {

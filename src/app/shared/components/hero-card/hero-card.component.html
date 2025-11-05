@@ -4,19 +4,19 @@
   <dt>Name</dt>
   <dd>{{ name() }}</dd>
   <dt>Power</dt>
-  <dd>{{ power() | number: '3.0-0'}}</dd>
+  <dd>{{ power() | number : "3.0-0" }}</dd>
   <dt>Alter Ego</dt>
   <dd [class.missing]="!alterEgo()">
     {{ alterEgo() || "UNKNOWN" | uppercase }}
   </dd>
   <dt>Description</dt>
-  <dd>{{ description() || "-" }}</dd>
+  <dd appHighlight>{{ description() || "-" }}</dd>
   <dt>Rank</dt>
   <dd>{{ rank() }}</dd>
+  <dt>Count</dt>
+  <dd>{{ count | appNormal }}</dd>
 </dl>
 
-<section>
-  @if (content()) {
-    <ng-container *ngTemplateOutlet="content()!"></ng-container>
-  }
+<section *ngIf="content()">
+  <ng-container *ngTemplateOutlet="content()!"></ng-container>
 </section>

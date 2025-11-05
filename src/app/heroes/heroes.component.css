@@ -50,3 +50,28 @@ a.delete {
 a.edit:hover, a.delete:hover {
   text-decoration: underline;
 }
+
+span.greater {
+  padding: 4px 6px;
+  vertical-align: -webkit-baseline-middle;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  font-weight: 600;
+}
+
+span.greater.up::before {
+  content: '↑';
+}
+
+span.greater.up {
+  color: green;
+}
+
+span.greater.down {
+  color: red;
+}
+
+span.greater.down::before {
+  content: '↓';
+}

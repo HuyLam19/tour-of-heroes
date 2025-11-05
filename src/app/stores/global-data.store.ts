@@ -3,13 +3,14 @@ import { OptionItem } from '../shared/models/option-item.model';
 import { timer } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class GlobalDataStore {
   public readonly rankOptions = signal<OptionItem[]>([]);
 
   public constructor() {
     this.#getRanks();
+    console.log('Global Data Store constructor')
   }
 
   #getRanks(): void {

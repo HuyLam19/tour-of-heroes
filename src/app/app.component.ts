@@ -9,6 +9,10 @@ import { Component, DoCheck } from '@angular/core';
 export class AppComponent implements DoCheck {
   protected title = 'Tour of heroes';
 
+  public constructor() {
+    console.log('AppComponent inits')
+  }
+
   public ngDoCheck(): void {
     console.log('Do check from AppComponent')
   }

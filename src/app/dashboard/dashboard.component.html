@@ -5,14 +5,17 @@
     <span class="loader"></span>
   </ng-container>
   <ng-template #heroesTemplate>
-    <app-hero-card
-      *ngFor="let hero of heroes()"
-      [id]="hero.id"
-      [name]="hero.name"
-      [power]="hero.power"
-      [alterEgo]="hero.alterEgo || ''"
-      [rank]="hero.rank | rankName : rankOptions()"
-      [description]="hero.description || ''"
-    />
+    <ng-container *ngFor="let hero of heroes()">
+      <app-hero-card
+        appHighlight
+        [id]="hero.id"
+        [name]="hero.name"
+        [power]="hero.power"
+        [alterEgo]="hero.alterEgo || ''"
+        [rank]="hero.rank | rankName : rankOptions()"
+        [description]="hero.description || ''"
+      >
+      </app-hero-card>
+    </ng-container>
   </ng-template>
 </main>
